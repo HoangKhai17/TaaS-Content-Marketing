@@ -1,6 +1,6 @@
 # taas-content-marketing
 
-Skill sản xuất nội dung tự động cho website dịch vụ TaaS (Testing as a Service), tích hợp Ghost CMS.
+Skill sản xuất nội dung tự động cho website dịch vụ TaaS (Testing as a Service), tích hợp WordPress.
 
 ---
 
@@ -9,7 +9,7 @@ Skill sản xuất nội dung tự động cho website dịch vụ TaaS (Testing
 ```
 taas-content-marketing/
 ├── SKILL.md                    ← Router chính: detect loại bài, pipeline tổng quát
-├── main.py                     ← Entry point (tái dùng từ skill du lịch, thay config)
+├── main.py                     ← Entry point
 ├── requirements.txt
 ├── env.example
 │
@@ -23,16 +23,16 @@ taas-content-marketing/
     └── SKILL.md                ← Thought leadership: góc nhìn chuyên gia về TaaS/QA
 │
 └── utils/
-    ├── ghost_client.py         ← Tái dùng từ skill du lịch
-    ├── image_generator.py      ← Tái dùng
-    └── seo_validator.py        ← Mới: kiểm tra từ khóa TaaS B2B
+    ├── wp_client.py            ← WordPress REST API client
+    ├── image_generator.py      ← Tìm ảnh từ Unsplash / Pexels / Pixabay
+    └── seo_validator.py        ← Kiểm tra từ khóa TaaS B2B
 ```
 
 ---
 
 ## 4 danh mục nội dung
 
-| Thư mục | Tag Ghost | Mô tả |
+| Thư mục | Tag WordPress | Mô tả |
 |---|---|---|
 | `tin-cong-ty/` | `tin-cong-ty` | Thông báo sản phẩm, milestone, partnership |
 | `tin-cong-nghe/` | `tin-cong-nghe` | Phân tích xu hướng testing/QA, tin tức ngành |
@@ -64,12 +64,19 @@ cp env.example .env
 Điền các giá trị vào `.env`:
 
 ```env
-GHOST_API_URL=https://your-site.com
-GHOST_ADMIN_API_KEY=your_admin_key
-GHOST_CONTENT_API_KEY=your_content_key
-KIE_API_KEY=your_kie_key
+WP_URL=https://your-site.com
+WP_USERNAME=your_wp_username
+WP_APP_PASSWORD=xxxx xxxx xxxx xxxx xxxx xxxx
 UNSPLASH_ACCESS_KEY=your_unsplash_key
 ```
+
+**Cách lấy Application Password:**
+1. Vào **WordPress Admin → Users → Profile**
+2. Kéo xuống mục **"Application Passwords"**
+3. Nhập tên app: `TaaS Content Skill` → click **"Add New Application Password"**
+4. Copy password hiển thị (chỉ hiện 1 lần)
+
+> ⚠️ Website phải bật **HTTPS** để Application Passwords hoạt động.
 
 ---
 
@@ -77,7 +84,13 @@ UNSPLASH_ACCESS_KEY=your_unsplash_key
 
 ```bash
 python main.py \
-  --topic "TaaS giúp startup tiết kiệm chi phí QA như thế nào" \
+  --file bai_viet.html \
+  --title "Fintech Startup Giảm 40% Chi Phí QA Nhờ TaaS" \
+  --slug "fintech-qa-case-study" \
   --type case-study \
-  --tag case-study
+  --tag case-study \
+  --excerpt "Mô tả ngắn 120-155 ký tự" \
+  --image-queries "software testing team" "QA automation dashboard"
 ```
+
+Thêm `--publish` để publish ngay thay vì lưu draft.

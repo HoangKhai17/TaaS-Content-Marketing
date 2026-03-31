@@ -1,6 +1,6 @@
 ---
 name: taas-content-marketing
-description: Viết và đăng bài blog B2B tự động lên website công ty công nghệ TaaS. Trigger khi người dùng nói "viết bài về [chủ đề]", "tạo case study", "viết insight về [topic]", "đăng bài tin công ty/công nghệ", hoặc cung cấp topic liên quan đến testing, QA, phần mềm, outsourcing. Pipeline đầy đủ: fetch internal links → research → viết → AEO/SEO optimize → format HTML → preview → publish Ghost. Audience chính: CTO, QA Manager, Engineering Lead, Product Manager tại các công ty phần mềm.
+description: Viết và đăng bài blog B2B tự động lên website công ty công nghệ TaaS. Trigger khi người dùng nói "viết bài về [chủ đề]", "tạo case study", "viết insight về [topic]", "đăng bài tin công ty/công nghệ", hoặc cung cấp topic liên quan đến testing, QA, phần mềm, outsourcing. Pipeline đầy đủ: fetch internal links → research → viết → AEO/SEO optimize → format HTML → preview → publish WordPress. Audience chính: CTO, QA Manager, Engineering Lead, Product Manager tại các công ty phần mềm.
 ---
 
 # TaaS Content Marketing Skill v1.0
@@ -416,7 +416,7 @@ python main.py \
 **Lưu ý:**
 - Luôn truyền `--tag` với slug chính xác từ danh sách có sẵn
 - Luôn truyền `--slug` thủ công — không để auto-generate
-- Mặc định đăng **DRAFT** — vào Ghost Admin xem lại trước khi publish
+- Mặc định đăng **DRAFT** — vào WordPress Admin xem lại trước khi publish
 - Thêm `--publish` để publish luôn
 
 ---
@@ -440,7 +440,7 @@ taas-content-marketing/
     └── SKILL.md                  ← Chi tiết: thought leadership, lập luận chuyên sâu
 │
 └── utils/
-    ├── ghost_client.py           ← Tái dùng từ skill 
+    ├── wp_client.py              ← WordPress REST API client
     ├── image_generator.py        ← Tái dùng
     └── seo_validator.py          ← Mới: kiểm tra AEO + từ khóa TaaS B2B
 ```
@@ -457,10 +457,9 @@ pip install -r requirements.txt
 cp env.example .env
 
 # 3. Điền vào .env:
-# GHOST_API_URL=https://your-company.com
-# GHOST_ADMIN_API_KEY=your_admin_key
-# GHOST_CONTENT_API_KEY=your_content_key
-# KIE_API_KEY=your_kie_key
+# WP_URL=https://your-company.com
+# WP_USERNAME=your_wp_username
+# WP_APP_PASSWORD=xxxx xxxx xxxx xxxx xxxx xxxx
 # UNSPLASH_ACCESS_KEY=your_unsplash_key
 # PEXELS_API_KEY=your_pexels_key
 # PIXABAY_API_KEY=your_pixabay_key

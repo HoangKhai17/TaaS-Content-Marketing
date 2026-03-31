@@ -1,2 +1,8 @@
+# TaaS Content Marketing Skill — Dependencies
+# Cài đặt: pip install -r requirements.txt
+
+# Đọc file .env
 python-dotenv
+
+# Gọi WordPress REST API, Unsplash, Pexels, Pixabay
 requests
