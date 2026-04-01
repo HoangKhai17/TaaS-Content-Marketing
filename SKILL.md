@@ -7,7 +7,7 @@ description: Viết và đăng bài blog B2B tự động lên website công ty 
 
 Skill viết và đăng bài blog B2B tự động cho website công ty TaaS với đầy đủ tính năng:
 - Research tự động từ web (xu hướng ngành, số liệu mới nhất, competitor insight)
-- Internal linking tự động từ Ghost API
+- Internal linking tự động từ WordPress REST API
 - AEO (Answer Engine Optimization) — viết để AI (ChatGPT, Perplexity) có thể trích dẫn
 - SEO B2B tiếng Việt + tiếng Anh cho từ khóa kỹ thuật
 - URL slug tối ưu, ngắn gọn
@@ -42,7 +42,7 @@ Insight       → slug: insight
 - Câu chuyện khách hàng có số liệu cụ thể → `case-study`
 - Quan điểm chuyên gia, thought leadership, góc nhìn sâu về TaaS/QA → `insight`
 
-**TUYỆT ĐỐI không tạo tag mới** — Ghost sẽ tự tạo tag nếu truyền tên không khớp chính xác slug.
+**TUYỆT ĐỐI không tạo tag mới** — WordPress sẽ tự tạo tag nếu truyền tên không khớp chính xác slug.
 
 ---
 
@@ -103,7 +103,7 @@ Trước khi viết bài, Claude PHẢI thực hiện 2 việc này:
 
 ```bash
 python -c "
-from utils.ghost_client import fetch_published_posts, format_posts_for_linking
+from utils.wp_client import fetch_published_posts, format_posts_for_linking
 posts = fetch_published_posts()
 print(format_posts_for_linking(posts))
 "
@@ -260,7 +260,7 @@ Mục tiêu: Nội dung được ChatGPT, Perplexity, Google AI trích dẫn khi
 
 ### URL Slug — QUAN TRỌNG
 
-Claude PHẢI tạo slug thủ công. **Không để Ghost tự generate từ title.**
+Claude PHẢI tạo slug thủ công. **Không để WordPress tự generate từ title.**
 
 **Quy tắc:**
 - Tối đa 5 từ, lý tưởng 3-4 từ
@@ -431,13 +431,13 @@ taas-content-marketing/
 ├── env.example
 │
 ├── tin-cong-ty/
-│   └── SKILL.md                  ← Chi tiết: thông báo sản phẩm, milestone, partnership
+│   └── instructions.md           ← Chi tiết: thông báo sản phẩm, milestone, partnership
 ├── tin-cong-nghe/
-│   └── SKILL.md                  ← Chi tiết: phân tích trend testing/QA, tin tức ngành
+│   └── instructions.md           ← Chi tiết: phân tích trend testing/QA, tin tức ngành
 ├── case-study/
-│   └── SKILL.md                  ← Chi tiết: template khách hàng với số liệu đo được
+│   └── instructions.md           ← Chi tiết: template khách hàng với số liệu đo được
 └── insight/
-    └── SKILL.md                  ← Chi tiết: thought leadership, lập luận chuyên sâu
+    └── instructions.md           ← Chi tiết: thought leadership, lập luận chuyên sâu
 │
 └── utils/
     ├── wp_client.py              ← WordPress REST API client

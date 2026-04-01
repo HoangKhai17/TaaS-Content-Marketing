@@ -14,13 +14,13 @@ taas-content-marketing/
 ├── env.example
 │
 ├── tin-cong-ty/
-│   └── SKILL.md                ← Cấu trúc bài: thông báo sản phẩm, milestone, partnership
+│   └── instructions.md                ← Cấu trúc bài: thông báo sản phẩm, milestone, partnership
 ├── tin-cong-nghe/
-│   └── SKILL.md                ← Bài phân tích xu hướng testing/QA, tin tức ngành
+│   └── instructions.md                ← Bài phân tích xu hướng testing/QA, tin tức ngành
 ├── case-study/
-│   └── SKILL.md                ← Template khách hàng: vấn đề → giải pháp → kết quả
+│   └── instructions.md                ← Template khách hàng: vấn đề → giải pháp → kết quả
 └── insight/
-    └── SKILL.md                ← Thought leadership: góc nhìn chuyên gia về TaaS/QA
+    └── instructions.md                ← Thought leadership: góc nhìn chuyên gia về TaaS/QA
 │
 └── utils/
     ├── wp_client.py            ← WordPress REST API client
