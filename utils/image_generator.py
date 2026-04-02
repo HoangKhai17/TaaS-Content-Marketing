@@ -223,3 +223,47 @@ def format_inline_html(image: dict, caption: str = "") -> str:
         f'<figcaption>{display_caption}</figcaption>'
         f'</figure>'
     )
+
+
+# ──────────────────────────────────────────────
+# PLACEHOLDER INJECTION
+# ──────────────────────────────────────────────
+
+def extract_queries_from_html(html: str) -> list[str]:
+    """
+    Trích xuất danh sách query từ các placeholder trong HTML.
+    Placeholder format: <!-- IMAGE: english query here -->
+
+    Ví dụ: <!-- IMAGE: software testing automation workflow -->
+    """
+    import re
+    return re.findall(r'<!--\s*IMAGE:\s*(.+?)\s*-->', html)
+
+
+def inject_images_into_html(html: str, images: list[dict]) -> str:
+    """
+    Thay thế các placeholder <!-- IMAGE: ... --> trong HTML bằng <figure> thật.
+
+    - Nếu số ảnh >= số placeholder: thay tất cả
+    - Nếu ảnh ít hơn placeholder: thay được bao nhiêu hay bấy nhiêu,
+      placeholder còn lại bị xóa (không để comment rác trong HTML)
+
+    Args:
+        html:   Nội dung HTML có chứa placeholder
+        images: Danh sách ảnh trả về từ search() / search_multiple()
+
+    Returns:
+        HTML đã được chèn ảnh thật
+    """
+    import re
+    pattern = re.compile(r'<!--\s*IMAGE:\s*.+?\s*-->')
+    matches = pattern.findall(html)
+
+    for i, match in enumerate(matches):
+        if i < len(images):
+            replacement = format_inline_html(images[i])
+        else:
+            replacement = ""  # Xóa placeholder thừa
+        html = html.replace(match, replacement, 1)
+
+    return html

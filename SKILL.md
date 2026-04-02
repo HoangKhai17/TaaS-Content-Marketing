@@ -324,10 +324,21 @@ bai-viet-ve-xu-huong-testing-trong-nam-2026                       ❌ quá dài
 dự kiến tăng ngân sách cho automated testing trong 2026.
 <em>(Nguồn: Gartner Magic Quadrant for Software Testing Tools 2025)</em></p>
 
-<!-- Vị trí chèn ảnh — image_generator.py sẽ tự chèn -->
+<!-- IMAGE: relevant english query for this section -->
 ```
 
-**Quy tắc format:**
+**Quy tắc placeholder ảnh:**
+- Đặt `<!-- IMAGE: [query tiếng Anh] -->` sau H2 đầu tiên (cover visual) và sau mỗi section chính
+- Query phải **tiếng Anh**, mô tả nội dung section đó — ví dụ:
+  ```html
+  <!-- IMAGE: software testing team reviewing dashboard -->
+  <!-- IMAGE: QA automation test results chart -->
+  <!-- IMAGE: fintech startup engineering team -->
+  ```
+- Số lượng placeholder = số ảnh inline muốn có trong bài (khuyến nghị 1-3)
+- `main.py` sẽ tự động fetch ảnh thật từ Unsplash/Pexels và thay thế placeholder khi publish
+
+**Quy tắc format khác:**
 - `<strong>` cho số liệu, tên công nghệ, kết quả đo được
 - `<ul>/<ol>` cho danh sách — KHÔNG viết gạch đầu dòng trong `<p>`
 - `<blockquote>` cho insight quan trọng hoặc quote từ expert/khách hàng

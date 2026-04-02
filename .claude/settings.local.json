@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"\\\\.\\(js|ts|json|md|env\\)$\")",
+      "Bash(python -c \"from utils.image_generator import extract_queries_from_html, inject_images_into_html; html = '<h2>Test</h2><!-- IMAGE: software testing team --><p>body</p><!-- IMAGE: QA dashboard --><p>more</p>'; queries = extract_queries_from_html\\(html\\); print\\('Queries found:', queries\\)\")"
+    ]
+  }
+}

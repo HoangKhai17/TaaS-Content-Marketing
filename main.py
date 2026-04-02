@@ -33,7 +33,13 @@ from utils.wp_client import (
     format_posts_for_linking,
     check_slug_exists,
 )
-from utils.image_generator import search, search_multiple, format_cover_html
+from utils.image_generator import (
+    search,
+    search_multiple,
+    format_cover_html,
+    extract_queries_from_html,
+    inject_images_into_html,
+)
 from utils.seo_validator import SEOValidator
 
 
@@ -151,21 +157,24 @@ def step_validate(html: str, tag_slug: str, title: str, slug: str, excerpt: str)
 # ──────────────────────────────────────────────
 # Bước 5 — Tìm ảnh
 # ──────────────────────────────────────────────
-def step_images(image_queries: list[str], tag_slug: str) -> dict:
+def step_images(image_queries: list[str], tag_slug: str, html: str = "") -> dict:
     """
     Tìm ảnh cover + inline.
-    Returns {"cover": dict|None, "inline": list[dict]}
+
+    Inline queries ưu tiên theo thứ tự:
+      1. <!-- IMAGE: query --> placeholders trong HTML (Claude đặt sẵn)
+      2. --image-queries từ CLI (query[1:] nếu truyền vào)
+      3. Default query theo loại bài
+
+    Returns {"cover": dict|None, "inline": list[dict], "html": str}
+    Trường "html" đã được inject ảnh thật thay cho placeholder.
     """
     _print_divider("BƯỚC 5 — TÌM ẢNH")
 
     cover = None
     inline_images = []
 
-    if not image_queries:
-        print(YELLOW("⚠️   Không có --image-queries — dùng query mặc định theo loại bài"))
-        image_queries = []
-
-    # Ảnh cover — query đầu tiên
+    # ── Ảnh cover — query đầu tiên từ CLI hoặc default ──
     cover_query = image_queries[0] if image_queries else ""
     print(f"⏳  Tìm ảnh cover: '{cover_query or '(default)'}' ...")
     covers = search(cover_query, tag_slug=tag_slug, count=1)
@@ -176,15 +185,33 @@ def step_images(image_queries: list[str], tag_slug: str) -> dict:
     else:
         print(YELLOW("⚠️   Không tìm được ảnh cover — bài sẽ không có feature image"))
 
-    # Ảnh inline — các query còn lại
-    if len(image_queries) > 1:
-        print(f"\n⏳  Tìm {len(image_queries) - 1} ảnh inline...")
-        inline_images = search_multiple(image_queries[1:], tag_slug=tag_slug)
-        print(GREEN(f"✅  Tìm được {len(inline_images)} ảnh inline"))
+    # ── Ảnh inline ───────────────────────────────────────
+    # Ưu tiên 1: placeholder trong HTML
+    placeholder_queries = extract_queries_from_html(html) if html else []
+
+    # Ưu tiên 2: CLI queries (bỏ query đầu vì đã dùng cho cover)
+    cli_inline_queries = image_queries[1:] if len(image_queries) > 1 else []
+
+    inline_queries = placeholder_queries or cli_inline_queries
+
+    if inline_queries:
+        source_label = "placeholder trong HTML" if placeholder_queries else "--image-queries"
+        print(f"\n⏳  Tìm {len(inline_queries)} ảnh inline (từ {source_label})...")
+        inline_images = search_multiple(inline_queries, tag_slug=tag_slug)
+        print(GREEN(f"✅  Tìm được {len(inline_images)}/{len(inline_queries)} ảnh inline"))
+        for img in inline_images:
+            print(DIM(f"   • {img['source']} — {img['url'][:55]}..."))
     else:
         print(DIM("   (Không có query inline — chỉ dùng ảnh cover)"))
 
-    return {"cover": cover, "inline": inline_images}
+    # ── Inject ảnh vào HTML ───────────────────────────────
+    updated_html = html
+    if inline_images and html:
+        updated_html = inject_images_into_html(html, inline_images)
+        injected = len(inline_images)
+        print(GREEN(f"✅  Đã chèn {injected} ảnh vào nội dung bài"))
+
+    return {"cover": cover, "inline": inline_images, "html": updated_html}
 
 
 # ──────────────────────────────────────────────
@@ -206,6 +233,7 @@ def step_preview(
     cover = images.get("cover")
     inline = images.get("inline", [])
 
+    inline_note = f"{len(inline)} ảnh (đã chèn vào bài)" if inline else "(không có)"
     print(f"""
   Tiêu đề   : {BOLD(title)}
   URL Slug   : /{slug}/
@@ -216,7 +244,7 @@ def step_preview(
 
   🎨 ẢNH
   Cover      : {cover['source'] + ' — ' + cover['url'][:50] + '...' if cover else '(không có)'}
-  Inline     : {len(inline)} ảnh
+  Inline     : {inline_note}
   """)
 
 
@@ -342,8 +370,10 @@ def main():
         print(YELLOW("⚠️   Bỏ qua bước validate (--skip-validate)"))
 
     # ── Bước 5: Tìm ảnh ───────────────────────
-    images = step_images(args.image_queries, args.post_type)
+    images = step_images(args.image_queries, args.post_type, html=html)
     cover_url = images["cover"]["url"] if images.get("cover") else ""
+    # Dùng HTML đã inject ảnh inline (nếu có placeholder)
+    html = images.get("html", html)
 
     # ── Bước 6: Preview ───────────────────────
     step_preview(
