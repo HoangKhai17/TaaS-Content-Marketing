@@ -102,6 +102,26 @@ Luôn đăng **DRAFT** trừ khi người dùng nói rõ "publish luôn" hoặc 
 
 ---
 
+## LỆNH NHANH — TÌM Ý TƯỞNG BÀI VIẾT
+
+Dùng các slash command để research ý tưởng trước khi viết bài:
+
+| Lệnh | Tác dụng |
+|---|---|
+| `/tin-cong-nghe` | Tìm 5-10 tin công nghệ mới nhất (AI testing, DevOps, QA trends) để viết bài phân tích |
+| `/kien-thuc` | Tìm 5-10 khái niệm tech đang hot mà người mới cần hiểu (AI, chatbot, automation) |
+| `/case-study` | Tìm benchmark ngành + gợi ý góc viết case study |
+| `/tin-cong-ty` | Gợi ý dạng bài thông báo + hỏi thông tin nội bộ cần thiết |
+
+**Workflow gợi ý:**
+```
+1. Gọi /[loai-bai] để lấy danh sách ý tưởng
+2. Chọn ý tưởng muốn viết
+3. Skill tự động viết bài hoàn chỉnh theo pipeline
+```
+
+---
+
 ## BƯỚC 0 — Chuẩn bị trước khi viết
 
 Trước khi viết bài, Claude PHẢI thực hiện 2 việc này:
