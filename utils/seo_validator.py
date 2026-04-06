@@ -20,6 +20,7 @@ WORD_COUNT_RANGE = {
     "tin-cong-nghe": (1200, 1800),
     "case-study":    (1000, 1500),
     "insight":       (1500, 2500),
+    "kien-thuc":     (800,  1200),
 }
 
 FORBIDDEN_WORDS = [
@@ -239,6 +240,16 @@ def _check_eeat(content_html: str, tag_slug: str, result: ValidationResult):
             )
         elif len(found_sources) < 3:
             result.warn("Nên có ít nhất 3 nguồn uy tín cho bài phân tích/insight", deduct=3)
+    elif tag_slug == "kien-thuc":
+        # Bài kiến thức ưu tiên analogy và ví dụ thực tế, không bắt buộc nguồn học thuật
+        analogy_signals = ["hãy hình dung", "hãy nghĩ", "giống như", "ví như", "tương tự"]
+        has_analogy = any(sig in plain for sig in analogy_signals)
+        if not has_analogy:
+            result.warn(
+                "Bài kiến thức nên có ít nhất 1 analogy đời thường — "
+                "giúp người mới dễ hiểu hơn",
+                deduct=5,
+            )
     elif tag_slug == "case-study":
         # Case study cần số liệu, không nhất thiết cần nguồn ngoài
         pass

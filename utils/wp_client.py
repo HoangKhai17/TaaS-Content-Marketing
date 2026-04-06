@@ -39,6 +39,13 @@ TAG_SLUG_MAP = {
 
     "insight":            "insight",
     "thought leadership": "insight",
+
+    "kien-thuc":          "kien-thuc",
+    "kien thuc":          "kien-thuc",
+    "knowledge":          "kien-thuc",
+    "beginner":           "kien-thuc",
+    "hướng dẫn":          "kien-thuc",
+    "huong-dan":          "kien-thuc",
 }
 
 TAG_DISPLAY_NAME = {
@@ -46,6 +53,7 @@ TAG_DISPLAY_NAME = {
     "tin-cong-nghe": "Tin Công Nghệ",
     "case-study":    "Case Study",
     "insight":       "Insight",
+    "kien-thuc":     "Kiến Thức",
 }
 
 

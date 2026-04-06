@@ -307,7 +307,7 @@ def build_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--type", required=True,
-        choices=["tin-cong-ty", "tin-cong-nghe", "case-study", "insight"],
+        choices=["tin-cong-ty", "tin-cong-nghe", "case-study", "insight", "kien-thuc"],
         dest="post_type",
         help="Loại bài viết",
     )

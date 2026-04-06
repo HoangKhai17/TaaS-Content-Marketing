@@ -25,6 +25,7 @@ DEFAULT_QUERIES = {
     "tin-cong-nghe": ["software development", "coding laptop", "technology abstract"],
     "case-study":    ["business results growth", "team success dashboard", "software testing"],
     "insight":       ["strategic thinking", "technology leadership", "engineering whiteboard"],
+    "kien-thuc":     ["learning technology concept", "beginner guide digital education", "AI explained simple"],
 }
 
 

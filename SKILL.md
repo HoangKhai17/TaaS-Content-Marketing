@@ -34,6 +34,7 @@ Tin công ty   → slug: tin-cong-ty
 Tin công nghệ → slug: tin-cong-nghe
 Case study    → slug: case-study
 Insight       → slug: insight
+Kiến thức     → slug: kien-thuc
 ```
 
 **Quy tắc gán tag:**
@@ -41,6 +42,7 @@ Insight       → slug: insight
 - Xu hướng ngành testing/QA, công nghệ mới, phân tích thị trường → `tin-cong-nghe`
 - Câu chuyện khách hàng có số liệu cụ thể → `case-study`
 - Quan điểm chuyên gia, thought leadership, góc nhìn sâu về TaaS/QA → `insight`
+- Giải thích khái niệm công nghệ cho người mới (AI, chatbot, automation...) → `kien-thuc`
 
 **TUYỆT ĐỐI không tạo tag mới** — WordPress sẽ tự tạo tag nếu truyền tên không khớp chính xác slug.
 
@@ -53,6 +55,7 @@ tin-cong-ty   → Thông báo nội bộ: ra mắt dịch vụ, đối tác mớ
 tin-cong-nghe → Phân tích trend: AI in testing, DevOps, agile QA, outsourcing market
 case-study    → Câu chuyện khách hàng: vấn đề → giải pháp TaaS → kết quả đo được
 insight       → Thought leadership: lý luận chuyên sâu, dự báo ngành, quan điểm CTO/QA Lead
+kien-thuc     → Giáo dục người mới: giải thích AI/chatbot/automation đơn giản, trao giá trị cho reader phổ thông
 ```
 
 ---
@@ -69,6 +72,7 @@ Khi người dùng chỉ nói **"viết bài về [chủ đề]"** mà không cu
 | "xu hướng", "trend", "thị trường", "phân tích", "so sánh", "AI", "DevOps" | `tin-cong-nghe` |
 | "case study", "khách hàng", "dự án", "câu chuyện", "kết quả", "tiết kiệm" | `case-study` |
 | "insight", "quan điểm", "tôi nghĩ", "tại sao", "tương lai", "chiến lược" | `insight` |
+| "giải thích", "là gì", "người mới", "nhập môn", "cơ bản", "dễ hiểu", "chatbot", "AI agent" | `kien-thuc` |
 | Không có từ khóa nào → | `insight` (mặc định — phù hợp B2B nhất) |
 
 ### Slug — tự generate theo công thức
@@ -78,6 +82,7 @@ tin-cong-ty   : [ten-su-kien-khong-dau]          → ra-mat-dich-vu-automation-t
 tin-cong-nghe : [trend-chinh-khong-dau]           → ai-testing-xu-huong-2026
 case-study    : [ten-kh-khong-dau]-case-study     → fintech-startup-case-study
 insight       : [goc-nhin-chinh-khong-dau]        → tai-sao-taas-thay-the-qa-inhouse
+kien-thuc     : [khai-niem-chinh-khong-dau]       → ai-la-gi | chatbot-vs-ai-agent
 ```
 
 ### Status — mặc định là DRAFT
@@ -92,6 +97,8 @@ Luôn đăng **DRAFT** trừ khi người dùng nói rõ "publish luôn" hoặc 
 | "case study khách hàng fintech tiết kiệm 40% QA cost" | case-study, slug: fintech-startup-case-study, draft |
 | "insight tại sao outsource testing lại hiệu quả hơn" | insight, slug: tai-sao-outsource-testing-hieu-qua, draft |
 | "thông báo ra mắt dịch vụ automation testing rồi đăng luôn" | tin-cong-ty, slug: ra-mat-automation-testing, published |
+| "giải thích AI agent cho người không rành tech" | kien-thuc, slug: ai-agent-la-gi, draft |
+| "viết bài nhập môn về chatbot dễ hiểu" | kien-thuc, slug: chatbot-la-gi, draft |
 
 ---
 
@@ -422,6 +429,16 @@ python main.py \
   --tag "tin-cong-nghe" \
   --excerpt "Mô tả ngắn" \
   --image-queries "AI software testing automation" "machine learning QA"
+
+# Kiến thức
+python main.py \
+  --file ten_file.html \
+  --title "AI Agent Là Gì? Giải Thích Cho Người Không Rành Tech" \
+  --slug "ai-agent-la-gi" \
+  --type kien-thuc \
+  --tag "kien-thuc" \
+  --excerpt "Mô tả ngắn 120-155 ký tự, giải thích AI Agent bằng ngôn ngữ đời thường" \
+  --image-queries "AI assistant technology simple" "chatbot versus AI agent"
 ```
 
 **Lưu ý:**
