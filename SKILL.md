@@ -390,6 +390,27 @@ Trước khi hiển thị preview, tự chạy checklist này:
 
 Nếu bất kỳ mục nào ✗ → sửa trước khi hiển thị preview.
 
+## BƯỚC 5 (tiếp) — Tìm ảnh thực từ Unsplash
+
+Trước khi hiển thị preview, Claude PHẢI dùng `web_search` hoặc `WebFetch` để tìm URL ảnh thực:
+
+**Cách tìm ảnh từ Unsplash:**
+```
+Dùng web_search với query: "site:unsplash.com [image query tiếng Anh]"
+Hoặc fetch: https://unsplash.com/s/photos/[query-dash-separated]
+Lấy URL ảnh trực tiếp có dạng: https://images.unsplash.com/photo-...
+```
+
+**Fallback nếu Unsplash không có kết quả:**
+1. Pexels: `site:pexels.com/photo/ [query]`
+2. Pixabay: `site:pixabay.com/photos/ [query]`
+
+**Quy tắc:**
+- Tìm **tối thiểu 2, tối đa 4 URL ảnh** thực — không để placeholder
+- Ưu tiên ảnh **ngang (landscape)**, tỷ lệ 16:9 hoặc 3:2
+- Ảnh phải mang tính **kỹ thuật, professional** — tránh ảnh generic/stock quá rõ
+- Ghi rõ nguồn (Unsplash / Pexels / Pixabay) cạnh mỗi URL
+
 ## BƯỚC 5 (tiếp) — Preview và xác nhận
 
 ```
@@ -404,10 +425,29 @@ Internal    : [count] links
 Số liệu     : [count] điểm có nguồn trích dẫn
 Excerpt     : [text 120-155 ký tự — phải có từ khóa chính]
 
+#️⃣ HASHTAG
+Social      : [5-8 hashtag tiếng Việt + tiếng Anh, dùng # prefix]
+             Ví dụ: #QAOutsource #KiểmThửPhầnMềm #TaaS #SoftwareTesting #DevOps
+Quy tắc    : Mix tiếng Việt (niche local) + tiếng Anh (reach rộng hơn)
+             Luôn có: #TaaS + 1 hashtag loại bài (vd: #Insight #CaseStudy)
+
+🔍 SEO KEYWORDS
+Primary     : [1 từ khóa chính — search volume cao nhất, có trong title/H1]
+Secondary   : [2-3 từ khóa phụ — có trong H2/H3 và body]
+Long-tail   : [2-3 cụm từ khóa dài — dạng câu hỏi, phù hợp AEO]
+Ví dụ:
+  Primary   : outsource testing vietnam
+  Secondary : TaaS, kiểm thử phần mềm, QA outsource
+  Long-tail : "outsource testing có đáng không", "chi phí QA inhouse vs outsource"
+
 🎨 ẢNH
 Cover       : Nano Banana — [prompt tiếng Anh ngắn, phong cách tech/professional]
 Inline      : [count] ảnh
-Queries     : [keywords tiếng Anh]
+URLs tìm được:
+  1. [URL ảnh 1] — [nguồn: Unsplash/Pexels/Pixabay] — [mô tả ngắn]
+  2. [URL ảnh 2] — [nguồn] — [mô tả ngắn]
+  3. [URL ảnh 3] — [nguồn] — [mô tả ngắn] (nếu có)
+  4. [URL ảnh 4] — [nguồn] — [mô tả ngắn] (nếu có)
 
 ✅ E-E-A-T   : [Pass / cần chỉnh — liệt kê vấn đề nếu có]
 ═══════════════════════════════════════════
