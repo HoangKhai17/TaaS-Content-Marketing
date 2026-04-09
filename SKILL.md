@@ -1,6 +1,6 @@
 ---
 name: taas-content-marketing
-description: Viết và đăng bài blog B2B tự động lên website công ty công nghệ TaaS. Trigger khi người dùng nói "viết bài về [chủ đề]", "tạo case study", "viết insight về [topic]", "đăng bài tin công ty/công nghệ", hoặc cung cấp topic liên quan đến testing, QA, phần mềm, outsourcing. Pipeline đầy đủ: fetch internal links → research → viết → AEO/SEO optimize → format HTML → preview → publish WordPress. Audience chính: CTO, QA Manager, Engineering Lead, Product Manager tại các công ty phần mềm.
+description: 'Viết và đăng bài blog B2B tự động lên website công ty công nghệ TaaS. Trigger khi người dùng nói "viết bài về [chủ đề]", "tạo case study", "viết insight về [topic]", "đăng bài tin công ty/công nghệ", hoặc cung cấp topic liên quan đến testing, QA, phần mềm, outsourcing. Pipeline đầy đủ - fetch internal links, research, viết, AEO/SEO optimize, format HTML, preview, publish WordPress. Audience chính - CTO, QA Manager, Engineering Lead, Product Manager tại các công ty phần mềm.'
 ---
 
 # TaaS Content Marketing Skill v1.0
